@@ -4,6 +4,8 @@ Niko-niko Calendar (Niko-cale) plugin is a Redmine plugin that shows the mood of
 If you want to know more about Niko-niko Calendar, see the following page.
 http://www.geocities.jp/nikonikocalendar/index_en.html
 
+This plugin is also reviewed in the "Mastering Redmine" book.
+
 == Requirements
 
 * This plugin works only with Redmine(>=2.1.0)
