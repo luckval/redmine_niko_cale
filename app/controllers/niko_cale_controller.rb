@@ -38,12 +38,12 @@ class NikoCaleController < ApplicationController
     @users = find_all_users(projects, @selected_role_ids)
     @feelings_per_user, @morales = get_feelings_per_user_and_morales(@users, @dates)
     @issues_count_per_user = issues_count_per_user @users, @project
-    @versions = Version.find(:all, :conditions=>["project_id =? and effective_date >= ? and effective_date <= ?", @project, @dates.first, @dates.last], :order=>"effective_date ASC")
+    @versions = Version.where("project_id =? and effective_date >= ? and effective_date <= ?", @project, @dates.first, @dates.last).order("effective_date ASC")
   end
   def issues_count_per_user users, project
-    open_issue_statuses = IssueStatus.find_all_by_is_closed(false)
+    open_issue_statuses = IssueStatus.where(is_closed: false)
     users.inject({}) do |result, user|
-      issues = Issue.find_all_by_assigned_to_id_and_status_id_and_project_id(User.find(user), open_issue_statuses, project).size
+      issues = Issue.where(assigned_to_id: User.find(user), status_id: open_issue_statuses, project_id: project).size
       result[user] = issues
       result
     end

@@ -19,7 +19,7 @@ class Feeling < ActiveRecord::Base
   belongs_to :user
   validates_inclusion_of :level, :in=>0...FEELING_TYPES.size
   acts_as_event :url => Proc.new {|feeling| {:controller => 'feelings', :action => 'show', :id => feeling.id}}, :datetime=>:at
-  has_many :comments, :as => :commented, :dependent => :delete_all, :order => "created_on"
+  has_many :comments, -> { :order => "created_on" }, :as => :commented, :dependent => :delete_all
 
   FEELING_TYPES.each do |feeling|
     class_eval "def #{feeling}?;self.level == #{FEELING_TYPES.index(feeling)};end"
@@ -71,9 +71,9 @@ end
     Feeling.destroy_all(["at <= ?", date])
   end
   def self.find_by_user_and_date_range user, date_range
-    Feeling.find(:all, :conditions=>["user_id =? and at >= ? and at <= ?", user, date_range.first, date_range.last], :order=>"at ASC")
+    Feeling.where("user_id =? and at >= ? and at <= ?", user, date_range.first, date_range.last).order("at ASC")
   end
   def self.latest user
-    Feeling.find(:first, :conditions=>["user_id=?", user], :order=>'at DESC')
+    Feeling.where("user_id=?", user).order('at DESC').first
   end
 end
