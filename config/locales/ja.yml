@@ -1,5 +1,9 @@
 # Japanese strings go here for Rails i18n
 ja:
+  project_module_niko_cale: "ニコカレ"
+  permission_view_feelings: "ニコカレの閲覧"
+  permission_edit_feelings: "ニコカレの編集"
+  permission_comment_feelings: "ニコカレのコメントを編集"
   label_niko_cale: "ニコカレ"
   label_niko_niko_calendar: "ニコニコカレンダー"
   label_niko_cale_how_do_you_feel: "気分は?"
